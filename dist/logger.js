@@ -5,21 +5,32 @@ var Log;
      * @enum {Logger_LogLevel}
      */
     (function (Logger_LogLevel) {
-        /** The fatal log level value */
-        Logger_LogLevel[Logger_LogLevel["FATAL"] = 0] = "FATAL";
-        /** The error log level value */
-        Logger_LogLevel[Logger_LogLevel["ERROR"] = 1] = "ERROR";
+        /** The info log level value */
+        Logger_LogLevel[Logger_LogLevel["INFO"] = 0] = "INFO";
+        /** The notice log level value */
+        Logger_LogLevel[Logger_LogLevel["NOTICE"] = 1] = "NOTICE";
         /** The warn log level value */
         Logger_LogLevel[Logger_LogLevel["WARN"] = 2] = "WARN";
-        /** The notice log level value */
-        Logger_LogLevel[Logger_LogLevel["NOTICE"] = 3] = "NOTICE";
-        /** The info log level value */
-        Logger_LogLevel[Logger_LogLevel["INFO"] = 4] = "INFO";
         /** The debug log level value */
-        Logger_LogLevel[Logger_LogLevel["DEBUG"] = 5] = "DEBUG";
+        Logger_LogLevel[Logger_LogLevel["DEBUG"] = 3] = "DEBUG";
+        /** The error log level value */
+        Logger_LogLevel[Logger_LogLevel["ERROR"] = 4] = "ERROR";
+        /** The fatal log level value */
+        Logger_LogLevel[Logger_LogLevel["FATAL"] = 5] = "FATAL";
     })(Log.Logger_LogLevel || (Log.Logger_LogLevel = {}));
     var Logger_LogLevel = Log.Logger_LogLevel;
     ;
+    var Logger_LogLevel;
+    (function (Logger_LogLevel) {
+        function parse(type) {
+            return Log.Logger_Type[type];
+        }
+        Logger_LogLevel.parse = parse;
+        function toString(logLevel) {
+            return Logger_LogLevel[logLevel];
+        }
+        Logger_LogLevel.toString = toString;
+    })(Logger_LogLevel = Log.Logger_LogLevel || (Log.Logger_LogLevel = {}));
 })(Log || (Log = {}));
 var Log;
 (function (Log) {
@@ -32,10 +43,16 @@ var Log;
          * @constructor
          */
         function Logger_Options(options) {
+            /** @member {Logger_LogLevel} */
+            this._logLevel = 0 /* INFO */;
             /** @member {Logger_Writer_Interface[]} */
             this._logWriters = [];
             /** @member {Logger_Filter_Interface[]} */
             this._logFilters = [];
+            // Check whether options is provided
+            if (!options) {
+                return;
+            }
             this._logLevel = options.logLevel;
             this._logPattern = options.logPattern;
             this._logWriters = options.logWriters;
@@ -165,6 +182,10 @@ var Log;
             return Logger_Type[type];
         }
         Logger_Type.parse = parse;
+        function toString(loggerType) {
+            return Logger_Type[loggerType];
+        }
+        Logger_Type.toString = toString;
     })(Logger_Type = Log.Logger_Type || (Log.Logger_Type = {}));
 })(Log || (Log = {}));
 var Log;
@@ -253,7 +274,13 @@ var Log;
         }
         /** @inheritdoc */
         Logger_Writer_Console_Writer.prototype.write = function (logLevel, message, exception) {
-            console.log("TIMESTAMP: ${logLevel} ${message} ${exception}");
+            // Check whether a exception object is provided
+            if (exception) {
+                console.log("" + new Date().toLocaleDateString() + ": <" + Log.Logger_LogLevel.toString(logLevel) + "> Message: " + message + " " + exception);
+            }
+            else {
+                console.log("" + new Date().toLocaleDateString() + ": <" + Log.Logger_LogLevel.toString(logLevel) + "> Message: " + message);
+            }
         };
         return Logger_Writer_Console_Writer;
     })(Log.Logger_Writer);
@@ -333,6 +360,9 @@ var Log;
     })();
     Log.Logger_Appender = Logger_Appender;
 })(Log || (Log = {}));
+Object.prototype.toString = function () {
+    return JSON.stringify(this);
+};
 var Log;
 (function (Log) {
     /**
@@ -421,7 +451,7 @@ var Log;
                 // Get the loggers
                 var logger = loggers[index];
                 // Log the event
-                logger.log(0 /* FATAL */, { errorMsg: errorMsg, lineNumber: lineNumber, colNumber: colNumber, error: error });
+                logger.log(5 /* FATAL */, { errorMsg: errorMsg, lineNumber: lineNumber, colNumber: colNumber, error: error });
             }
             return false;
         };
@@ -441,6 +471,10 @@ var Log;
     })();
     Log.Window = Window;
     (function () {
+        // Check whether the variable window is available
+        if (typeof window == "undefined") {
+            return;
+        }
         // Register a Window error event callback method
         window.onerror = Window.onError;
     })();
@@ -477,7 +511,7 @@ var Log;
         }
         /** @inheritdoc */
         Logger.prototype.info = function (message, exception) {
-            this.log(4 /* INFO */, message, exception);
+            this.log(0 /* INFO */, message, exception);
         };
         /** @inheritdoc */
         Logger.prototype.warn = function (message, exception) {
@@ -485,15 +519,15 @@ var Log;
         };
         /** @inheritdoc */
         Logger.prototype.debug = function (message, exception) {
-            this.log(5 /* DEBUG */, message, exception);
+            this.log(3 /* DEBUG */, message, exception);
         };
         /** @inheritdoc */
         Logger.prototype.error = function (message, exception) {
-            this.log(1 /* ERROR */, message, exception);
+            this.log(4 /* ERROR */, message, exception);
         };
         /** @inheritdoc */
         Logger.prototype.fatal = function (message, exception) {
-            this.log(0 /* FATAL */, message, exception);
+            this.log(5 /* FATAL */, message, exception);
         };
         /** @inheritdoc */
         Logger.prototype.log = function (logLevel, message, exception) {
@@ -610,6 +644,8 @@ var Log;
 /// <reference path="Logger/Observer/Handler/Handler.ts" />
 /// <reference path="Logger/Appender/Interface.ts" />
 /// <reference path="Logger/Appender/Appender.ts" />
+/// <reference path="Object/Object.ts" />
+/// <reference path="Utility/Type.ts" />
 /// <reference path="Utility/Type.ts" />
 /// <reference path="Window/Window.ts" />
 /// <reference path="Exception.ts" />
