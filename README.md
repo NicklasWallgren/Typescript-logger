@@ -1,6 +1,5 @@
 ##Typescript-logger
-> Log framework written in Typescript
-
+Log framework written in Typescript
 -------------
 ### **Examples**
 #### **Simple console logger**
