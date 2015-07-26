@@ -33,6 +33,7 @@ object.toString = function(): string {
 logger.info(object);
 
 // Log a simple message with exception object
+logger.info("A simple message to be logged", new Log.Exception("Exception message"));
 
 ```
 

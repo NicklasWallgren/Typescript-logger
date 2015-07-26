@@ -496,7 +496,7 @@ var Log;
             this.stack = (new Error()).stack;
         }
         Exception.prototype.toString = function () {
-            return this.name + ': ' + this.message + this.stack;
+            return this.name + ": '" + this.message + "' " + this.stack;
         };
         Exception.CLASS_NAME = "Exception";
         return Exception;
@@ -652,8 +652,6 @@ var Log;
     })(Log.Logger_Observer_Handler);
     Log.Logger = Logger;
 })(Log || (Log = {}));
-// Two new logging events
-// Applied filters logic
 /// <reference path="Logger/LogLevel.ts" />
 /// <reference path="Logger/Options/Parameters/Interface.ts" />
 /// <reference path="Logger/Options/Interface.ts" />
@@ -702,5 +700,10 @@ object.toString = function () {
     return "Key = " + this.key;
 };
 logger.info(object);
+// Log a simple message with exception object
+logger.info("A simple message to be logged", new Log.Exception("Exception message"));
+// Log levels
+// Options
 // Callback method
-// Filters
+// Add Filters
+// Window error callback

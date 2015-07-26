@@ -12,8 +12,6 @@ module Log {
 
     	protected static CLASS_NAME = "Exception";
 
-    	public message: string;
-
         constructor(message: string) {
             super(message);
 
@@ -23,10 +21,16 @@ module Log {
         }
 
         public toString(): string {
-            return this.name + ': ' + this.message + this.stack;
+            return `${this.name}: '${this.message}' ${this.stack}`;
         }
     }
 }
+
+
+
+
+
+
 
 
 

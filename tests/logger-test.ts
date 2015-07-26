@@ -15,6 +15,8 @@ var logger : Log.Logger = Log.Logger_Factory.build(Log.Logger_Type.CONSOLE, opti
 // Log a simple message
 logger.info("A simple message to be logged");
 
+
+
 /**
 * Log messages.
 */
@@ -34,6 +36,14 @@ object.toString = function(): string {
 
 logger.info(object);
 
+// Log a simple message with exception object
+logger.info("A simple message to be logged", new Log.Exception("Exception message"));
+
+
+
+// Log levels
+// Options
 // Callback method
-// Filters
+// Add Filters
+// Window error callback
 
