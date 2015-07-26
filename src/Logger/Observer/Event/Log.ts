@@ -10,7 +10,13 @@ module Log {
 		BEFORE_LOG,
 
 		/** The after log event value */
-		AFTER_LOG
+		AFTER_LOG,
+
+		/** The filter recected event value */
+		FILTER_RECECTED,
+
+		/** The filter accepted event value */
+		FILTER_ACCEPTED,
 		
 	}
 

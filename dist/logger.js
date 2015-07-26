@@ -44,7 +44,7 @@ var Log;
          */
         function Logger_Options(options) {
             /** @member {Logger_LogLevel} */
-            this._logLevel = 0 /* INFO */;
+            this._logLevel = Log.Logger_LogLevel.INFO;
             /** @member {Logger_Writer_Interface[]} */
             this._logWriters = [];
             /** @member {Logger_Filter_Interface[]} */
@@ -201,11 +201,11 @@ var Log;
             // Create the logger object
             var logger = new Log.Logger(logOptions);
             switch (loggerType) {
-                case 0 /* CONSOLE */:
+                case Log.Logger_Type.CONSOLE:
                     var writter = new Log.Logger_Writer_Console_Writer();
                     logger.addLogWriter(writter);
                     break;
-                case 1 /* NULL */:
+                case Log.Logger_Type.NULL:
                     break;
             }
             return logger;
@@ -255,7 +255,7 @@ var Log;
     })();
     Log.Logger_Writer = Logger_Writer;
 })(Log || (Log = {}));
-var __extends = this.__extends || function (d, b) {
+var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     __.prototype = b.prototype;
@@ -276,10 +276,10 @@ var Log;
         Logger_Writer_Console_Writer.prototype.write = function (logLevel, message, exception) {
             // Check whether a exception object is provided
             if (exception) {
-                console.log("" + new Date().toLocaleDateString() + ": <" + Log.Logger_LogLevel.toString(logLevel) + "> Message: " + message + " " + exception);
+                console.log(new Date().toLocaleDateString() + ": <" + Log.Logger_LogLevel.toString(logLevel) + "> Message: " + message + " " + exception);
             }
             else {
-                console.log("" + new Date().toLocaleDateString() + ": <" + Log.Logger_LogLevel.toString(logLevel) + "> Message: " + message);
+                console.log(new Date().toLocaleDateString() + ": <" + Log.Logger_LogLevel.toString(logLevel) + "> Message: " + message);
             }
         };
         return Logger_Writer_Console_Writer;
@@ -314,6 +314,10 @@ var Log;
         Logger_Observer_Event_Log[Logger_Observer_Event_Log["BEFORE_LOG"] = 0] = "BEFORE_LOG";
         /** The after log event value */
         Logger_Observer_Event_Log[Logger_Observer_Event_Log["AFTER_LOG"] = 1] = "AFTER_LOG";
+        /** The filter recected event value */
+        Logger_Observer_Event_Log[Logger_Observer_Event_Log["FILTER_RECECTED"] = 2] = "FILTER_RECECTED";
+        /** The filter accepted event value */
+        Logger_Observer_Event_Log[Logger_Observer_Event_Log["FILTER_ACCEPTED"] = 3] = "FILTER_ACCEPTED";
     })(Log.Logger_Observer_Event_Log || (Log.Logger_Observer_Event_Log = {}));
     var Logger_Observer_Event_Log = Log.Logger_Observer_Event_Log;
 })(Log || (Log = {}));
@@ -336,6 +340,7 @@ var Log;
         Logger_Observer_Handler.prototype.dispatchEvent = function (logEvent, logLevel, message, exception) {
             // Get the list of log event listener
             var listeners = this._listeners[logEvent];
+            // Iterate through the list of listeners of the particular log event
             for (var index in listeners) {
                 // Get the log event listener
                 var listener = listeners[index];
@@ -447,11 +452,12 @@ var Log;
             if (error === void 0) { error = null; }
             // The window loggers
             var loggers = Window._loggers;
+            // Iterate through the configured log writers
             for (var index in loggers) {
                 // Get the loggers
                 var logger = loggers[index];
                 // Log the event
-                logger.log(5 /* FATAL */, { errorMsg: errorMsg, lineNumber: lineNumber, colNumber: colNumber, error: error });
+                logger.log(Log.Logger_LogLevel.FATAL, { errorMsg: errorMsg, lineNumber: lineNumber, colNumber: colNumber, error: error });
             }
             return false;
         };
@@ -511,28 +517,28 @@ var Log;
         }
         /** @inheritdoc */
         Logger.prototype.info = function (message, exception) {
-            this.log(0 /* INFO */, message, exception);
+            this.log(Log.Logger_LogLevel.INFO, message, exception);
         };
         /** @inheritdoc */
         Logger.prototype.warn = function (message, exception) {
-            this.log(2 /* WARN */, message, exception);
+            this.log(Log.Logger_LogLevel.WARN, message, exception);
         };
         /** @inheritdoc */
         Logger.prototype.debug = function (message, exception) {
-            this.log(3 /* DEBUG */, message, exception);
+            this.log(Log.Logger_LogLevel.DEBUG, message, exception);
         };
         /** @inheritdoc */
         Logger.prototype.error = function (message, exception) {
-            this.log(4 /* ERROR */, message, exception);
+            this.log(Log.Logger_LogLevel.ERROR, message, exception);
         };
         /** @inheritdoc */
         Logger.prototype.fatal = function (message, exception) {
-            this.log(5 /* FATAL */, message, exception);
+            this.log(Log.Logger_LogLevel.FATAL, message, exception);
         };
         /** @inheritdoc */
         Logger.prototype.log = function (logLevel, message, exception) {
             // Check if the log event is loggable
-            if (!this.isLoggable(logLevel)) {
+            if (!this.isLoggable(logLevel, message, exception)) {
                 return;
             }
             // Check if the message is of type Object
@@ -592,7 +598,8 @@ var Log;
             // Get the configured log writers
             var logWriters = this.logOptions.logWriters;
             // Dispatch event to listeners
-            this.dispatchEventToListeners(0 /* BEFORE_LOG */, logLevel, message, exception);
+            this.dispatchEventToListeners(Log.Logger_Observer_Event_Log.BEFORE_LOG, logLevel, message, exception);
+            // Iterate through the configured log writers
             for (var logWriterKey in logWriters) {
                 // Get the log writer
                 var logWriter = logWriters[logWriterKey];
@@ -600,7 +607,7 @@ var Log;
                 logWriter.write(logLevel, message, exception);
             }
             // Dispatch event to listeners
-            this.dispatchEventToListeners(1 /* AFTER_LOG */, logLevel, message, exception);
+            this.dispatchEventToListeners(Log.Logger_Observer_Event_Log.AFTER_LOG, logLevel, message, exception);
         };
         /**
          *	Dispatches the log event to the event listeners.
@@ -619,8 +626,27 @@ var Log;
          * @param {Logger_LogLevel} logLevel  - The loglevel of the log messsage.
          * @return {boolean} If a log event is loggable
          */
-        Logger.prototype.isLoggable = function (logLevel) {
-            return (logLevel <= this.logOptions.logLevel);
+        Logger.prototype.isLoggable = function (logLevel, message, exception) {
+            // Check if the given log level is loggable
+            if (logLevel > this.logOptions.logLevel) {
+                return false;
+            }
+            // Get the configured log filters
+            var logFilters = this.logOptions.logFilters;
+            // Iterate through the configured log filters
+            for (var logFilterKey in logFilters) {
+                // Get the log filter
+                var logFilter = logFilter[logFilterKey];
+                // Check if the message is loggable
+                if (!logFilter.isValid(logLevel, message, exception)) {
+                    // Dispatch event to listeners
+                    this.dispatchEventToListeners(Log.Logger_Observer_Event_Log.FILTER_RECECTED, logLevel, message, exception);
+                    return false;
+                }
+            }
+            // Dispatch event to listeners
+            this.dispatchEventToListeners(Log.Logger_Observer_Event_Log.FILTER_ACCEPTED, logLevel, message, exception);
+            return true;
         };
         return Logger;
     })(Log.Logger_Observer_Handler);

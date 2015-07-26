@@ -43,7 +43,7 @@ module Log {
 		/** @inheritdoc */
 		public log(logLevel : Logger_LogLevel, message : string|Object, exception?: Exception): void {
 			// Check if the log event is loggable
-			if (!this.isLoggable(logLevel)) {
+			if (!this.isLoggable(logLevel, message, exception)) {
 				return;
 			}
 
@@ -148,14 +148,35 @@ module Log {
 		 * @param {Logger_LogLevel} logLevel  - The loglevel of the log messsage.
 		 * @return {boolean} If a log event is loggable
 		 */
-		private isLoggable(logLevel : Logger_LogLevel): boolean {
-			return (logLevel <= this.logOptions.logLevel);
+		private isLoggable(logLevel : Logger_LogLevel, message : string|Object, exception? : Exception): boolean {
+			// Check if the given log level is loggable
+			if (logLevel > this.logOptions.logLevel) {
+				return false;
+			}
+
+			// Get the configured log filters
+			var logFilters : Logger_Filter_Interface[] = this.logOptions.logFilters;
+
+			// Iterate through the configured log filters
+			for (var logFilterKey in logFilters) {
+				// Get the log filter
+				var logFilter = logFilter[logFilterKey];
+
+				// Check if the message is loggable
+				if (!logFilter.isValid(logLevel, message, exception)) {
+
+					// Dispatch event to listeners
+					this.dispatchEventToListeners(Logger_Observer_Event_Log.FILTER_RECECTED, logLevel, message, exception);
+
+					return false;
+				}
+			}
+
+			// Dispatch event to listeners
+			this.dispatchEventToListeners(Logger_Observer_Event_Log.FILTER_ACCEPTED, logLevel, message, exception);
+
+			return true;
 		}
 
 	}
-
 }
-
-
-
-

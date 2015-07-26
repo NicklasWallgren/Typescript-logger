@@ -12,7 +12,7 @@ var options : Log.Logger_Options_Interface = new Log.Logger_Options();
 // Create a basic console logger
 var logger : Log.Logger = Log.Logger_Factory.build(Log.Logger_Type.CONSOLE, options);
 
-// Log a simple message using level info
+// Log a simple message
 logger.info("A simple message to be logged");
 
 /**
