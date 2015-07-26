@@ -17,31 +17,53 @@ logger.info("A simple message to be logged");
 ```
 
 #### **Logging**
+
+**Log a simple object**
 ```
-// Log a simple object
 logger.info({"key" : "value"});
+```
 
-// Log a simple string
+**Log a simple string**
+```
 logger.info("A simple message to be logged");
+```
 
-// Log a object using a custom toString method
+**Log a object using a custom toString method**
+```
 var object = {"key" : "value"};
 
 object.toString = function(): string {
 	return `Key = ${this.key}`;
 }
 logger.info(object);
+```
 
-// Log a simple message with exception object
+**Log a simple message with exception object**
+```
 logger.info("A simple message to be logged", new Log.Exception("Exception message"));
-
 ```
 
 -------------
 
 ###  **Log levels**
 ```
+/** The info log level value */
+INFO,
 
+/** The notice log level value */
+NOTICE,
+
+/** The warn log level value */
+WARN,
+
+/** The debug log level value */
+DEBUG,
+
+/** The error log level value */
+ERROR,
+
+/** The fatal log level value */
+FATAL
 ```
 -------------
 ### **Logger Options**
