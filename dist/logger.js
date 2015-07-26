@@ -496,7 +496,7 @@ var Log;
             this.stack = (new Error()).stack;
         }
         Exception.prototype.toString = function () {
-            return this.name + ': ' + this.message + this.stack;
+            return this.name + ": '" + this.message + "' " + this.stack;
         };
         Exception.CLASS_NAME = "Exception";
         return Exception;
