@@ -82,7 +82,7 @@ module Log {
 		}
 		
 		/**
-		 *	Logs a message of type string.
+		 * Logs a message of type string.
 		 *
 		 * @param {Logger_LogLevel} logLevel  - The loglevel of the log messsage.
 		 * @param {string} message  - The message to be logged.
@@ -93,7 +93,7 @@ module Log {
 		}
 
 		/**
-		 *	Logs a message of type Object.
+		 * Logs a message of type Object.
 		 *
 		 * @param {Logger_LogLevel} logLevel  - The loglevel of the log messsage.
 		 * @param {Object} object  - The object to be logged.
@@ -104,7 +104,7 @@ module Log {
 		}
 
 		/**
-		 *	Dispatches the log event to the configured log writers
+		 * Dispatches the log event to the configured log writers
 		 *
 		 * @param {Logger_LogLevel} logLevel  - The loglevel of the log messsage.
 		 * @param {string} message  - The message to be logged.
@@ -131,7 +131,7 @@ module Log {
 		}
 
 		/**
-		 *	Dispatches the log event to the event listeners.
+		 * Dispatches the log event to the event listeners.
 		 *
 		 * @param {Logger_Observer_Event_Log} logEvent  - The log event.
 		 * @param {Logger_LogLevel} logLevel  - The loglevel of the log messsage.
@@ -143,7 +143,7 @@ module Log {
 		}
 
 		/**
-		 *	Check if the log event is loggable
+		 * Check if the log event is loggable
 		 *
 		 * @param {Logger_LogLevel} logLevel  - The loglevel of the log messsage.
 		 * @return {boolean} If a log event is loggable
@@ -166,7 +166,7 @@ module Log {
 				if (!logFilter.isValid(logLevel, message, exception)) {
 
 					// Dispatch event to listeners
-					this.dispatchEventToListeners(Logger_Observer_Event_Log.FILTER_RECECTED, logLevel, message, exception);
+					this.dispatchEventToListeners(Logger_Observer_Event_Log.FILTER_FILTERED, logLevel, message, exception);
 
 					return false;
 				}

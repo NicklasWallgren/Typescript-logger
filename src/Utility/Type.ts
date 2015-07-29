@@ -7,9 +7,9 @@ module Log {
 	export class Utility_Type {
 
 		/** 
-		 *	@member {string}
-    	 *	@default
-		 *	@static
+		 * @member {string}
+    	 * @default
+		 * @static
 		 */
 		protected static TYPE_STRING = 'string';
 

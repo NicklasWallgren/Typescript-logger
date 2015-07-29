@@ -12,8 +12,8 @@ module Log {
 		/** The after log event value */
 		AFTER_LOG,
 
-		/** The filter recected event value */
-		FILTER_RECECTED,
+		/** The filter filtered event value */
+		FILTER_FILTERED,
 
 		/** The filter accepted event value */
 		FILTER_ACCEPTED,

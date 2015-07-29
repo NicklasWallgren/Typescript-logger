@@ -39,7 +39,7 @@ module Log {
 		}
 
 		/**
-		 *	Gets the log level {Logger_LogLevel}.
+		 * Gets the log level {Logger_LogLevel}.
 		 *
 		 * @return {Logger_LogLevel} The loglevel.
 		 */
@@ -48,7 +48,7 @@ module Log {
 		}
 
 		/**
-		 *	Sets the log level {Logger_LogLevel}
+		 * Sets the log level {Logger_LogLevel}
 		 *
 		 * @param {Logger_LogLevel} logLevel  - The log level.
 		 */
@@ -57,7 +57,7 @@ module Log {
 		}
 
 		/**
-		 *	Gets the log pattern.
+		 * Gets the log pattern.
 		 *
 		 * @return {string} The log pattern.
 		 */
@@ -66,7 +66,7 @@ module Log {
 		}
 
 		/**
-		 *	Sets the log pattern.
+		 * Sets the log pattern.
 		 *
 		 * @param {string} logPattern  - The log pattern.
 		 */
@@ -75,7 +75,7 @@ module Log {
 		}
 
 		/**
-		 *	Gets the log writers {Logger_Writer_Interface[]}.
+		 * Gets the log writers {Logger_Writer_Interface[]}.
 		 *
 		 * @return {Logger_Writer_Interface[]} The log writers.
 		 */
@@ -84,7 +84,7 @@ module Log {
 		}
 
 		/**
-		 *	Sets the log writers.
+		 * Sets the log writers.
 		 *
 		 * @param {Logger_Writer_Interface[]} logWriters  - The log writers.
 		 */
@@ -93,7 +93,7 @@ module Log {
 		}
 
 		/**
-		 *	Gets the log filters {Logger_Filter_Interface[]}.
+		 * Gets the log filters {Logger_Filter_Interface[]}.
 		 *
 		 * @return {Logger_Filter_Interface[]} The log filters.
 		 */
@@ -102,7 +102,7 @@ module Log {
 		}
 
 		/**
-		 *	Sets the log filters.
+		 * Sets the log filters.
 		 *
 		 * @param {Logger_Filter_Interface[]} logFilters  - The log filters.
 		 */
@@ -111,7 +111,7 @@ module Log {
 		}
 
 		/**
-		 *	Gets the log appenders {Logger_Appender_Interface[]}.
+		 * Gets the log appenders {Logger_Appender_Interface[]}.
 		 *
 		 * @return {Logger_Appender_Interface[]} The log appenders.
 		 */
@@ -120,7 +120,7 @@ module Log {
 		}
 
 		/**
-		 *	Sets the log appenders.
+		 * Sets the log appenders.
 		 *
 		 * @param {Logger_Appender_Interface[]} logAppenders  - The log appenders.
 		 */

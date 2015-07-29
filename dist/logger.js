@@ -61,7 +61,7 @@ var Log;
         }
         Object.defineProperty(Logger_Options.prototype, "logLevel", {
             /**
-             *	Gets the log level {Logger_LogLevel}.
+             * Gets the log level {Logger_LogLevel}.
              *
              * @return {Logger_LogLevel} The loglevel.
              */
@@ -69,7 +69,7 @@ var Log;
                 return this._logLevel;
             },
             /**
-             *	Sets the log level {Logger_LogLevel}
+             * Sets the log level {Logger_LogLevel}
              *
              * @param {Logger_LogLevel} logLevel  - The log level.
              */
@@ -81,7 +81,7 @@ var Log;
         });
         Object.defineProperty(Logger_Options.prototype, "logPattern", {
             /**
-             *	Gets the log pattern.
+             * Gets the log pattern.
              *
              * @return {string} The log pattern.
              */
@@ -89,7 +89,7 @@ var Log;
                 return this._logPattern;
             },
             /**
-             *	Sets the log pattern.
+             * Sets the log pattern.
              *
              * @param {string} logPattern  - The log pattern.
              */
@@ -101,7 +101,7 @@ var Log;
         });
         Object.defineProperty(Logger_Options.prototype, "logWriters", {
             /**
-             *	Gets the log writers {Logger_Writer_Interface[]}.
+             * Gets the log writers {Logger_Writer_Interface[]}.
              *
              * @return {Logger_Writer_Interface[]} The log writers.
              */
@@ -109,7 +109,7 @@ var Log;
                 return this._logWriters;
             },
             /**
-             *	Sets the log writers.
+             * Sets the log writers.
              *
              * @param {Logger_Writer_Interface[]} logWriters  - The log writers.
              */
@@ -121,7 +121,7 @@ var Log;
         });
         Object.defineProperty(Logger_Options.prototype, "logFilters", {
             /**
-             *	Gets the log filters {Logger_Filter_Interface[]}.
+             * Gets the log filters {Logger_Filter_Interface[]}.
              *
              * @return {Logger_Filter_Interface[]} The log filters.
              */
@@ -129,7 +129,7 @@ var Log;
                 return this._logFilters;
             },
             /**
-             *	Sets the log filters.
+             * Sets the log filters.
              *
              * @param {Logger_Filter_Interface[]} logFilters  - The log filters.
              */
@@ -141,7 +141,7 @@ var Log;
         });
         Object.defineProperty(Logger_Options.prototype, "logAppenders", {
             /**
-             *	Gets the log appenders {Logger_Appender_Interface[]}.
+             * Gets the log appenders {Logger_Appender_Interface[]}.
              *
              * @return {Logger_Appender_Interface[]} The log appenders.
              */
@@ -149,7 +149,7 @@ var Log;
                 return this._logAppenders;
             },
             /**
-             *	Sets the log appenders.
+             * Sets the log appenders.
              *
              * @param {Logger_Appender_Interface[]} logAppenders  - The log appenders.
              */
@@ -226,7 +226,7 @@ var Log;
         }
         Object.defineProperty(Logger_Writer.prototype, "logPattern", {
             /**
-             *	Gets the log pattern.
+             * Gets the log pattern.
              *
              * @return {string} The log pattern.
              */
@@ -234,7 +234,7 @@ var Log;
                 return this._logPattern;
             },
             /**
-             *	Sets the log pattern.
+             * Sets the log pattern.
              *
              * @param {string} logPattern  - The log pattern.
              */
@@ -314,8 +314,8 @@ var Log;
         Logger_Observer_Event_Log[Logger_Observer_Event_Log["BEFORE_LOG"] = 0] = "BEFORE_LOG";
         /** The after log event value */
         Logger_Observer_Event_Log[Logger_Observer_Event_Log["AFTER_LOG"] = 1] = "AFTER_LOG";
-        /** The filter recected event value */
-        Logger_Observer_Event_Log[Logger_Observer_Event_Log["FILTER_RECECTED"] = 2] = "FILTER_RECECTED";
+        /** The filter filtered event value */
+        Logger_Observer_Event_Log[Logger_Observer_Event_Log["FILTER_FILTERED"] = 2] = "FILTER_FILTERED";
         /** The filter accepted event value */
         Logger_Observer_Event_Log[Logger_Observer_Event_Log["FILTER_ACCEPTED"] = 3] = "FILTER_ACCEPTED";
     })(Log.Logger_Observer_Event_Log || (Log.Logger_Observer_Event_Log = {}));
@@ -396,9 +396,9 @@ var Log;
             return (object instanceof Object);
         };
         /**
-         *	@member {string}
-         *	@default
-         *	@static
+         * @member {string}
+         * @default
+         * @static
          */
         Utility_Type.TYPE_STRING = 'string';
         return Utility_Type;
@@ -440,7 +440,7 @@ var Log;
             return unregistred;
         };
         /**
-         *	On error callback method.
+         * On error callback method.
          *
          * @param {any} errorMsg  - The error message.
          * @param {string} url  - The url.
@@ -568,7 +568,7 @@ var Log;
             this.logOptions.logAppenders.push(logAppender);
         };
         /**
-         *	Logs a message of type string.
+         * Logs a message of type string.
          *
          * @param {Logger_LogLevel} logLevel  - The loglevel of the log messsage.
          * @param {string} message  - The message to be logged.
@@ -578,7 +578,7 @@ var Log;
             this.dispatchToWriters(logLevel, message, exception);
         };
         /**
-         *	Logs a message of type Object.
+         * Logs a message of type Object.
          *
          * @param {Logger_LogLevel} logLevel  - The loglevel of the log messsage.
          * @param {Object} object  - The object to be logged.
@@ -588,7 +588,7 @@ var Log;
             this.dispatchToWriters(logLevel, object.toString(), exception);
         };
         /**
-         *	Dispatches the log event to the configured log writers
+         * Dispatches the log event to the configured log writers
          *
          * @param {Logger_LogLevel} logLevel  - The loglevel of the log messsage.
          * @param {string} message  - The message to be logged.
@@ -610,7 +610,7 @@ var Log;
             this.dispatchEventToListeners(Log.Logger_Observer_Event_Log.AFTER_LOG, logLevel, message, exception);
         };
         /**
-         *	Dispatches the log event to the event listeners.
+         * Dispatches the log event to the event listeners.
          *
          * @param {Logger_Observer_Event_Log} logEvent  - The log event.
          * @param {Logger_LogLevel} logLevel  - The loglevel of the log messsage.
@@ -621,7 +621,7 @@ var Log;
             _super.prototype.dispatchEvent.call(this, logEvent, logLevel, message, exception);
         };
         /**
-         *	Check if the log event is loggable
+         * Check if the log event is loggable
          *
          * @param {Logger_LogLevel} logLevel  - The loglevel of the log messsage.
          * @return {boolean} If a log event is loggable
@@ -640,7 +640,7 @@ var Log;
                 // Check if the message is loggable
                 if (!logFilter.isValid(logLevel, message, exception)) {
                     // Dispatch event to listeners
-                    this.dispatchEventToListeners(Log.Logger_Observer_Event_Log.FILTER_RECECTED, logLevel, message, exception);
+                    this.dispatchEventToListeners(Log.Logger_Observer_Event_Log.FILTER_FILTERED, logLevel, message, exception);
                     return false;
                 }
             }

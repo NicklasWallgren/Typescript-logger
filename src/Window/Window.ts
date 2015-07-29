@@ -44,7 +44,7 @@ module Log {
 		}
 
 		/**
-		 *	On error callback method.
+		 * On error callback method.
 		 *
 		 * @param {any} errorMsg  - The error message.
 		 * @param {string} url  - The url.

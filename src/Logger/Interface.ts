@@ -8,7 +8,7 @@ module Log {
 	export interface Logger_Interface {
 
 		/**
-		 *	Logs a message with the log level INFO .
+		 * Logs a message with the log level INFO .
 		 *
 		 * @param {string} message  - The message to be logged.
 		 * @param {Exception} [exception] - The exception to be logged.
@@ -16,7 +16,7 @@ module Log {
 		info(message : string, exception?: Exception): void;
 
 		/**
-		 *	Logs a object with the log level INFO. 
+		 * Logs a object with the log level INFO. 
 		 *
 		 * @param {Object} logObject - The log object to be logged.
 		 * @param {Exception} [exception] - The exception to be logged.
@@ -24,7 +24,7 @@ module Log {
 		info(logObject : Object, exception?: Exception);
 
 		/**
-		 *	Logs a message with the log level WARN.
+		 * Logs a message with the log level WARN.
 		 *
 		 * @param {string} message  - The message to be logged.
 		 * @param {Exception} [exception] - The exception to be logged.
@@ -33,7 +33,7 @@ module Log {
 
 
 		/**
-		 *	Logs a object with the log level WARN. 
+		 * Logs a object with the log level WARN. 
 		 *
 		 * @param {Object} logObject - The log object to be logged.
 		 * @param {Exception} [exception] - The exception to be logged.
@@ -42,7 +42,7 @@ module Log {
 
 
 		/**
-		 *	Logs a message with the log level DEBUG.
+		 * Logs a message with the log level DEBUG.
 		 *
 		 * @param {string} message  - The message to be logged.
 		 * @param {Exception} [exception] - The exception to be logged.
@@ -50,7 +50,7 @@ module Log {
 		debug(message : string, exception?: Exception): void;
 
 		/**
-		 *	Logs a object with the log level DEBUG.
+		 * Logs a object with the log level DEBUG.
 		 *
 		 * @param {Object} logObject - The log object to be logged.
 		 * @param {Exception} [exception] - The exception to be logged.
@@ -58,7 +58,7 @@ module Log {
 		debug(logObject : Object, exception?: Exception): void;
 
 		/**
-		 *	Logs a message with the log level ERROR.
+		 * Logs a message with the log level ERROR.
 		 *
 		 * @param {string} message  - The message to be logged.
 		 * @param {Exception} [exception] - The exception to be logged.
@@ -66,7 +66,7 @@ module Log {
 		error(message : string, exception?: Exception): void;
 
 		/**
-		 *	Logs a object with the log level ERROR. 
+		 * Logs a object with the log level ERROR. 
 		 *
 		 * @param {Object} logObject - The log object to be logged.
 		 * @param {Exception} [exception] - The exception to be logged.
@@ -74,7 +74,7 @@ module Log {
 		error(logObject : Object, exception?: Exception): void;
 
 		/**
-		 *	Logs a message with the log level FATAL.
+		 * Logs a message with the log level FATAL.
 		 *
 		 * @param {string} message  - The message to be logged.
 		 * @param {Exception} [exception] - The exception to be logged.
@@ -82,7 +82,7 @@ module Log {
 		fatal(message : string, exception?: Exception): void;
 
 		/**
-		 *	Logs a object with the log level FATAL.
+		 * Logs a object with the log level FATAL.
 		 *
 		 * @param {Object} logObject - The log object to be logged.
 		 * @param {Exception} [exception] - The exception to be logged.
@@ -90,7 +90,7 @@ module Log {
 		fatal(logObject : Object, exception?: Exception): void;
 
 		/**
-		 *	Logs a message.
+		 * Logs a message.
 		 *
 		 * @param {string} message  - The message to be logged.
 		 * @param {Exception} [exception] - The exception to be logged.
@@ -98,7 +98,7 @@ module Log {
 		log(level : Logger_LogLevel, message : string, exception?: Exception): void;
 
 		/**
-		 *	Logs a message.
+		 * Logs a message.
 		 *
 		 * @param {Object} logObject  - The message to be logged.
 		 * @param {Exception} [exception] - The exception to be logged.
@@ -106,28 +106,28 @@ module Log {
 		log(level : Logger_LogLevel, logObject : Object, exception?: Exception): void;
 
 		/**
-		 *	Sets the logger options.
+		 * Sets the logger options.
 		 *
 		 * @param {Logger_Options_Interface} logOptions  - The logger options.
 		 */
 		setOptions(logOptions : Logger_Options_Interface): void;
 
 		/**
-		 *	Add a log writer.
+		 * Add a log writer.
 		 *
 		 * @param {Logger_Writer_Interface} logWriter  - The log writer to be added.
 		 */
 		addLogWriter(logWriter : Logger_Writer_Interface): void;
 
 		/**
-		 *	Add a log filter.
+		 * Add a log filter.
 		 *
 		 * @param {Logger_Filter_Interface} logFilter  - The log filter to be added.
 		 */
 		addLogFilter(logFilter : Logger_Filter_Interface): void;
 
 		/**
-		 *	Add a log appender.
+		 * Add a log appender.
 		 *
 		 * @param {Logger_Appender_Interface} logAppender  - The log appender to be added.
 		 */

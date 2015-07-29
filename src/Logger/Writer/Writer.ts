@@ -11,7 +11,7 @@ module Log {
 		protected _logPattern: string;
 
 		/**
-		 *	Gets the log pattern.
+		 * Gets the log pattern.
 		 *
 		 * @return {string} The log pattern.
 		 */
@@ -20,7 +20,7 @@ module Log {
 		}
 
 		/**
-		 *	Sets the log pattern.
+		 * Sets the log pattern.
 		 *
 		 * @param {string} logPattern  - The log pattern.
 		 */

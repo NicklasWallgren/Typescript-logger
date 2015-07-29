@@ -14,7 +14,7 @@ module Log {
 		logPattern: string;
 
 		/**
-		 *	The write method.
+		 * The write method.
 		 *
 		 * @param {Logger_LogLevel} logLevel  - The loglevel of the log messsage.
 		 * @param {string} message  - The message to be logged.
