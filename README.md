@@ -118,7 +118,6 @@ FILTER_ACCEPTED,
 ### **Logger Filters**
 ```
 Logger_Filter_NullFilter
-
 ```
 -------------
 ### **Window error callback**
