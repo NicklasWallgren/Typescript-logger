@@ -68,16 +68,56 @@ FATAL
 -------------
 ### **Logger Options**
 ```
+/**
+* The log level.
+* @var {Logger_LogLevel} logLevel
+*/
+logLevel: Logger_LogLevel;
+
+/**
+ * The log pattern.
+ * @var {string} logPattern.
+ */
+logPattern: string;
+
+/**
+ * The log writers.
+ * @var {Logger_Writer_Interface} log writer
+ */
+logWriters : Logger_Writer_Interface[];
+
+/**
+ * The log filters.
+ * @var {Logger_Filter_Interface[]} logFilters
+ */
+logFilters : Logger_Filter_Interface[];
+
+/**
+ * The log appenders.
+ * @var {Logger_Appender_Interface[]} logAppenders.
+ */
+logAppenders : Logger_Appender_Interface[];
 
 ```
 -------------
 ### **Callback methods**
 ```
+/** The before log event value */
+BEFORE_LOG,
 
+/** The after log event value */
+AFTER_LOG,
+
+/** The filter filtered event value */
+FILTER_FILTERED,
+
+/** The filter accepted event value */
+FILTER_ACCEPTED,
 ```
 -------------
 ### **Logger Filters**
 ```
+Logger_Filter_NullFilter
 
 ```
 -------------
