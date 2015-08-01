@@ -1,3 +1,7 @@
+
+/// <reference path="../Logger/Interface.ts" />
+/// <reference path="../Logger/LogLevel.ts" />
+
 module Log {
 
 	/**
@@ -7,27 +11,27 @@ module Log {
 	export class Window {
 
 		/** 
-		* @member {Logger[]}  
+		* @member {Logger_Interface[]}  
 		* @static
 		*/
-		protected static _loggers : Logger[];
+		protected static _loggers : Logger_Interface[];
 
 		/**
 		 * Register a logger as error handler.
 		 *
-		 * @param {Logger} logger  - The logger.
+		 * @param {Logger_Interface} logger  - The logger.
 		 */
-		public static registerErrorHandler(logger : Logger): void {
+		public static registerErrorHandler(logger : Logger_Interface): void {
 			Window._loggers.push(logger);
 		}
 
 		/**
 		 * Unregister a logger as error handler.
 		 *
-		 * @param {Logger} logger - The logger.
+		 * @param {Logger_Interface} logger - The logger.
 		 * @return {boolean} True if the logger was unregistred successfully, false otherwise.
 		 */
-		public static unregistrerErrorHandler(logger : Logger): boolean {
+		public static unregistrerErrorHandler(logger : Logger_Interface): boolean {
 			var unregistred = true;
 
 			// Get the index of the registred logger from the list of loggers
@@ -54,12 +58,12 @@ module Log {
 		 */
 		public static onError(errorMsg: any, url: string, lineNumber: number, colNumber: number, error: { stack?: string } = null) : boolean {	
 			// The window loggers
-			var loggers : Logger[] = Window._loggers;
+			var loggers : Logger_Interface[] = Window._loggers;
 
 			// Iterate through the configured log writers
 			for (var index in loggers) {
 				// Get the loggers
-				var logger : Logger = loggers[index];
+				var logger : Logger_Interface = loggers[index];
 
 				// Log the event
 				logger.log(Logger_LogLevel.FATAL, {errorMsg, lineNumber, colNumber, error});
@@ -73,7 +77,7 @@ module Log {
 		 *
 		 * @return {Logger[]} The registred loggers.
 		 */
-		public static get loggers(): Logger[] {
+		public static get loggers(): Logger_Interface[] {
 			return Window._loggers;
 		}
 

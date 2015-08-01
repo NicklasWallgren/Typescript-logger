@@ -1,3 +1,9 @@
+/// <reference path="Interface.ts" />
+/// <reference path="../Event/Event.ts" />
+/// <reference path="../Event/Log.ts" />
+/// <reference path="../../LogLevel.ts" />
+/// <reference path="../../../Exception.ts" />
+
 module Log {
 
 	/**

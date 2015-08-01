@@ -1,6 +1,32 @@
 var Log;
 (function (Log) {
     /**
+     * Enum for loggers.
+     * @enum {LoggerType}
+     */
+    (function (Logger_Type) {
+        /** The console logger value */
+        Logger_Type[Logger_Type["CONSOLE"] = 0] = "CONSOLE";
+        /** The null logger value */
+        Logger_Type[Logger_Type["NULL"] = 1] = "NULL";
+    })(Log.Logger_Type || (Log.Logger_Type = {}));
+    var Logger_Type = Log.Logger_Type;
+    var Logger_Type;
+    (function (Logger_Type) {
+        function parse(type) {
+            return Logger_Type[type];
+        }
+        Logger_Type.parse = parse;
+        function toString(loggerType) {
+            return Logger_Type[loggerType];
+        }
+        Logger_Type.toString = toString;
+    })(Logger_Type = Log.Logger_Type || (Log.Logger_Type = {}));
+})(Log || (Log = {}));
+/// <reference path="../Logger/Type.ts" />
+var Log;
+(function (Log) {
+    /**
      * Enum for log levels.
      * @enum {Logger_LogLevel}
      */
@@ -32,6 +58,49 @@ var Log;
         Logger_LogLevel.toString = toString;
     })(Logger_LogLevel = Log.Logger_LogLevel || (Log.Logger_LogLevel = {}));
 })(Log || (Log = {}));
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+var Log;
+(function (Log) {
+    var Exception = (function (_super) {
+        __extends(Exception, _super);
+        function Exception(message) {
+            _super.call(this, message);
+            this.name = Exception.CLASS_NAME;
+            this.message = message;
+            this.stack = (new Error()).stack;
+        }
+        Exception.prototype.toString = function () {
+            return this.name + ": '" + this.message + "' " + this.stack;
+        };
+        Exception.CLASS_NAME = "Exception";
+        return Exception;
+    })(Error);
+    Log.Exception = Exception;
+})(Log || (Log = {}));
+/// <reference path="../LogLevel.ts" />
+/// <reference path="../../Exception.ts" />
+/// <reference path="../LogLevel.ts" />
+/// <reference path="../../Exception.ts" />
+/// <reference path="../../Writer/Interface.ts" />
+/// <reference path="../../Filter/Interface.ts" />
+/// <reference path="../../Appender/Interface.ts" />
+/// <reference path="../../LogLevel.ts" />
+/// <reference path="../Options/Parameters/Interface.ts" />
+/// <reference path="../Writer/Interface.ts" />
+/// <reference path="../Filter/Interface.ts" />
+/// <reference path="../Appender/Interface.ts" />
+/// <reference path="../LogLevel.ts" />
+/// <reference path="../Options/Interface.ts" />
+/// <reference path="../Options/Parameters/Interface.ts" />
+/// <reference path="../Writer/Interface.ts" />
+/// <reference path="../Filter/Interface.ts" />
+/// <reference path="../Appender/Interface.ts" />
+/// <reference path="../LogLevel.ts" />
 var Log;
 (function (Log) {
     /**
@@ -163,146 +232,11 @@ var Log;
     })();
     Log.Logger_Options = Logger_Options;
 })(Log || (Log = {}));
-var Log;
-(function (Log) {
-    /**
-     * Enum for loggers.
-     * @enum {LoggerType}
-     */
-    (function (Logger_Type) {
-        /** The console logger value */
-        Logger_Type[Logger_Type["CONSOLE"] = 0] = "CONSOLE";
-        /** The null logger value */
-        Logger_Type[Logger_Type["NULL"] = 1] = "NULL";
-    })(Log.Logger_Type || (Log.Logger_Type = {}));
-    var Logger_Type = Log.Logger_Type;
-    var Logger_Type;
-    (function (Logger_Type) {
-        function parse(type) {
-            return Logger_Type[type];
-        }
-        Logger_Type.parse = parse;
-        function toString(loggerType) {
-            return Logger_Type[loggerType];
-        }
-        Logger_Type.toString = toString;
-    })(Logger_Type = Log.Logger_Type || (Log.Logger_Type = {}));
-})(Log || (Log = {}));
-var Log;
-(function (Log) {
-    /**
-     * The Logger_Factory class.
-     * @class
-     */
-    var Logger_Factory = (function () {
-        function Logger_Factory() {
-        }
-        Logger_Factory.build = function (loggerType, logOptions) {
-            // Create the logger object
-            var logger = new Log.Logger(logOptions);
-            switch (loggerType) {
-                case Log.Logger_Type.CONSOLE:
-                    var writter = new Log.Logger_Writer_Console_Writer();
-                    logger.addLogWriter(writter);
-                    break;
-                case Log.Logger_Type.NULL:
-                    break;
-            }
-            return logger;
-        };
-        return Logger_Factory;
-    })();
-    Log.Logger_Factory = Logger_Factory;
-})(Log || (Log = {}));
-var Log;
-(function (Log) {
-    /**
-     * The Logger_Writer class.
-     * @class
-     * @abstract
-     */
-    var Logger_Writer = (function () {
-        function Logger_Writer() {
-        }
-        Object.defineProperty(Logger_Writer.prototype, "logPattern", {
-            /**
-             * Gets the log pattern.
-             *
-             * @return {string} The log pattern.
-             */
-            get: function () {
-                return this._logPattern;
-            },
-            /**
-             * Sets the log pattern.
-             *
-             * @param {string} logPattern  - The log pattern.
-             */
-            set: function (logPattern) {
-                this._logPattern = logPattern;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        /**
-         * @inheritdoc
-         * @abstract
-         */
-        Logger_Writer.prototype.write = function (logLevel, message, exception) {
-            throw new Log.Exception('Must be implemented by subclass!');
-        };
-        return Logger_Writer;
-    })();
-    Log.Logger_Writer = Logger_Writer;
-})(Log || (Log = {}));
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
-var Log;
-(function (Log) {
-    /**
-     * The ConsoleLogger_Writer class.
-     * @class
-     */
-    var Logger_Writer_Console_Writer = (function (_super) {
-        __extends(Logger_Writer_Console_Writer, _super);
-        function Logger_Writer_Console_Writer() {
-            _super.apply(this, arguments);
-        }
-        /** @inheritdoc */
-        Logger_Writer_Console_Writer.prototype.write = function (logLevel, message, exception) {
-            // Check whether a exception object is provided
-            if (exception) {
-                console.log(new Date().toLocaleDateString() + ": <" + Log.Logger_LogLevel.toString(logLevel) + "> Message: " + message + " " + exception);
-            }
-            else {
-                console.log(new Date().toLocaleDateString() + ": <" + Log.Logger_LogLevel.toString(logLevel) + "> Message: " + message);
-            }
-        };
-        return Logger_Writer_Console_Writer;
-    })(Log.Logger_Writer);
-    Log.Logger_Writer_Console_Writer = Logger_Writer_Console_Writer;
-})(Log || (Log = {}));
-var Log;
-(function (Log) {
-    /**
-     * The NullFilter class.
-     * @class
-     */
-    var Logger_Filter_NullFilter = (function () {
-        function Logger_Filter_NullFilter() {
-        }
-        /** @inheritdoc */
-        Logger_Filter_NullFilter.prototype.isValid = function (logLevel, message, exception) {
-            return false;
-        };
-        return Logger_Filter_NullFilter;
-    })();
-    Log.Logger_Filter_NullFilter = Logger_Filter_NullFilter;
-})(Log || (Log = {}));
+/// <reference path="../Exception.ts" />
+/// <reference path="../Logger/Options/Interface.ts" />
+/// <reference path="../Logger/Writer/Interface.ts" />
+/// <reference path="../Logger/Filter/Interface.ts" />
+/// <reference path="../Logger/Appender/Interface.ts" />
 var Log;
 (function (Log) {
     /**
@@ -321,6 +255,18 @@ var Log;
     })(Log.Logger_Observer_Event_Log || (Log.Logger_Observer_Event_Log = {}));
     var Logger_Observer_Event_Log = Log.Logger_Observer_Event_Log;
 })(Log || (Log = {}));
+/// <reference path="../Event/Log.ts" />
+/// <reference path="../../LogLevel.ts" />
+/// <reference path="../../../Exception.ts" />
+/// <reference path="../Event/Log.ts" />
+/// <reference path="../Event/Event.ts" />
+/// <reference path="../../LogLevel.ts" />
+/// <reference path="../../../Exception.ts" />
+/// <reference path="Interface.ts" />
+/// <reference path="../Event/Event.ts" />
+/// <reference path="../Event/Log.ts" />
+/// <reference path="../../LogLevel.ts" />
+/// <reference path="../../../Exception.ts" />
 var Log;
 (function (Log) {
     /**
@@ -352,22 +298,6 @@ var Log;
     })();
     Log.Logger_Observer_Handler = Logger_Observer_Handler;
 })(Log || (Log = {}));
-var Log;
-(function (Log) {
-    /**
-     * The LogAppender class.
-     * @class
-     */
-    var Logger_Appender = (function () {
-        function Logger_Appender() {
-        }
-        return Logger_Appender;
-    })();
-    Log.Logger_Appender = Logger_Appender;
-})(Log || (Log = {}));
-Object.prototype.toString = function () {
-    return JSON.stringify(this);
-};
 var Log;
 (function (Log) {
     /**
@@ -405,104 +335,17 @@ var Log;
     })();
     Log.Utility_Type = Utility_Type;
 })(Log || (Log = {}));
-var Log;
-(function (Log) {
-    /**
-     * The window error handler class.
-     * @class
-     */
-    var Window = (function () {
-        function Window() {
-        }
-        /**
-         * Register a logger as error handler.
-         *
-         * @param {Logger} logger  - The logger.
-         */
-        Window.registerErrorHandler = function (logger) {
-            Window._loggers.push(logger);
-        };
-        /**
-         * Unregister a logger as error handler.
-         *
-         * @param {Logger} logger - The logger.
-         * @return {boolean} True if the logger was unregistred successfully, false otherwise.
-         */
-        Window.unregistrerErrorHandler = function (logger) {
-            var unregistred = true;
-            // Get the index of the registred logger from the list of loggers
-            var index = Window._loggers.indexOf(logger, 0);
-            // Check whether a logger was found in the list of registred loggers
-            if (index != undefined) {
-                Window._loggers.splice(index, 1);
-                unregistred = false;
-            }
-            return unregistred;
-        };
-        /**
-         * On error callback method.
-         *
-         * @param {any} errorMsg  - The error message.
-         * @param {string} url  - The url.
-         * @param {number} lineNumber  - The line number.
-         * @param {number} colNumber  - The col number.
-         * @param {any} error  - The stack trace error.
-         */
-        Window.onError = function (errorMsg, url, lineNumber, colNumber, error) {
-            if (error === void 0) { error = null; }
-            // The window loggers
-            var loggers = Window._loggers;
-            // Iterate through the configured log writers
-            for (var index in loggers) {
-                // Get the loggers
-                var logger = loggers[index];
-                // Log the event
-                logger.log(Log.Logger_LogLevel.FATAL, { errorMsg: errorMsg, lineNumber: lineNumber, colNumber: colNumber, error: error });
-            }
-            return false;
-        };
-        Object.defineProperty(Window, "loggers", {
-            /**
-             * Gets the registred loggers {Logger[]}.
-             *
-             * @return {Logger[]} The registred loggers.
-             */
-            get: function () {
-                return Window._loggers;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        return Window;
-    })();
-    Log.Window = Window;
-    (function () {
-        // Check whether the variable window is available
-        if (typeof window == "undefined") {
-            return;
-        }
-        // Register a Window error event callback method
-        window.onerror = Window.onError;
-    })();
-})(Log || (Log = {}));
-var Log;
-(function (Log) {
-    var Exception = (function (_super) {
-        __extends(Exception, _super);
-        function Exception(message) {
-            _super.call(this, message);
-            this.name = Exception.CLASS_NAME;
-            this.message = message;
-            this.stack = (new Error()).stack;
-        }
-        Exception.prototype.toString = function () {
-            return this.name + ": '" + this.message + "' " + this.stack;
-        };
-        Exception.CLASS_NAME = "Exception";
-        return Exception;
-    })(Error);
-    Log.Exception = Exception;
-})(Log || (Log = {}));
+/// <reference path="Logger/Interface.ts" />
+/// <reference path="Logger/LogLevel.ts" />
+/// <reference path="Logger/Observer/Handler/Handler.ts" />
+/// <reference path="Logger/Observer/Event/Log.ts" />
+/// <reference path="Logger/Observer/Handler/Handler.ts" />
+/// <reference path="Logger/Options/Interface.ts" />
+/// <reference path="Logger/Writer/Interface.ts" />
+/// <reference path="Logger/Filter/Interface.ts" />
+/// <reference path="Logger/Appender/Interface.ts" />
+/// <reference path="Exception.ts" />
+/// <reference path="Utility/Type.ts" />
 var Log;
 (function (Log) {
     /**
@@ -651,6 +494,228 @@ var Log;
         return Logger;
     })(Log.Logger_Observer_Handler);
     Log.Logger = Logger;
+})(Log || (Log = {}));
+/// <reference path="../Writer/Interface.ts" />
+/// <reference path="../LogLevel.ts" />
+/// <reference path="../../Exception.ts" />
+var Log;
+(function (Log) {
+    /**
+     * The Logger_Writer class.
+     * @class
+     * @abstract
+     */
+    var Logger_Writer = (function () {
+        function Logger_Writer() {
+        }
+        Object.defineProperty(Logger_Writer.prototype, "logPattern", {
+            /**
+             * Gets the log pattern.
+             *
+             * @return {string} The log pattern.
+             */
+            get: function () {
+                return this._logPattern;
+            },
+            /**
+             * Sets the log pattern.
+             *
+             * @param {string} logPattern  - The log pattern.
+             */
+            set: function (logPattern) {
+                this._logPattern = logPattern;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        /**
+         * @inheritdoc
+         * @abstract
+         */
+        Logger_Writer.prototype.write = function (logLevel, message, exception) {
+            throw new Log.Exception('Must be implemented by subclass!');
+        };
+        return Logger_Writer;
+    })();
+    Log.Logger_Writer = Logger_Writer;
+})(Log || (Log = {}));
+/// <reference path="../../Writer/Writer.ts" />
+/// <reference path="../../LogLevel.ts" />
+/// <reference path="../../../Exception.ts" />
+var Log;
+(function (Log) {
+    /**
+     * The ConsoleLogger_Writer class.
+     * @class
+     */
+    var Logger_Writer_Console_Writer = (function (_super) {
+        __extends(Logger_Writer_Console_Writer, _super);
+        function Logger_Writer_Console_Writer() {
+            _super.apply(this, arguments);
+        }
+        /** @inheritdoc */
+        Logger_Writer_Console_Writer.prototype.write = function (logLevel, message, exception) {
+            // Check whether a exception object is provided
+            if (exception) {
+                console.log(new Date().toLocaleDateString() + ": <" + Log.Logger_LogLevel.toString(logLevel) + "> Message: " + message + " " + exception);
+            }
+            else {
+                console.log(new Date().toLocaleDateString() + ": <" + Log.Logger_LogLevel.toString(logLevel) + "> Message: " + message);
+            }
+        };
+        return Logger_Writer_Console_Writer;
+    })(Log.Logger_Writer);
+    Log.Logger_Writer_Console_Writer = Logger_Writer_Console_Writer;
+})(Log || (Log = {}));
+/// <reference path="../Type.ts" />
+/// <reference path="../Options/Interface.ts" />
+/// <reference path="../../Logger/Interface.ts" />
+/// <reference path="../../Logger.ts" />
+/// <reference path="../../Logger/Writer/Console/Writer.ts" />
+var Log;
+(function (Log) {
+    /**
+     * The Logger_Factory class.
+     * @class
+     */
+    var Logger_Factory = (function () {
+        function Logger_Factory() {
+        }
+        Logger_Factory.build = function (loggerType, logOptions) {
+            // Create the logger object
+            var logger = new Log.Logger(logOptions);
+            switch (loggerType) {
+                case Log.Logger_Type.CONSOLE:
+                    var writter = new Log.Logger_Writer_Console_Writer();
+                    logger.addLogWriter(writter);
+                    break;
+                case Log.Logger_Type.NULL:
+                    break;
+            }
+            return logger;
+        };
+        return Logger_Factory;
+    })();
+    Log.Logger_Factory = Logger_Factory;
+})(Log || (Log = {}));
+/// <reference path="Interface.ts" />
+/// <reference path="../LogLevel.ts" />
+/// <reference path="../../Exception.ts" />
+var Log;
+(function (Log) {
+    /**
+     * The NullFilter class.
+     * @class
+     */
+    var Logger_Filter_NullFilter = (function () {
+        function Logger_Filter_NullFilter() {
+        }
+        /** @inheritdoc */
+        Logger_Filter_NullFilter.prototype.isValid = function (logLevel, message, exception) {
+            return false;
+        };
+        return Logger_Filter_NullFilter;
+    })();
+    Log.Logger_Filter_NullFilter = Logger_Filter_NullFilter;
+})(Log || (Log = {}));
+/// <reference path="Interface.ts" />
+var Log;
+(function (Log) {
+    /**
+     * The LogAppender class.
+     * @class
+     */
+    var Logger_Appender = (function () {
+        function Logger_Appender() {
+        }
+        return Logger_Appender;
+    })();
+    Log.Logger_Appender = Logger_Appender;
+})(Log || (Log = {}));
+Object.prototype.toString = function () {
+    return JSON.stringify(this);
+};
+/// <reference path="../Logger/Interface.ts" />
+/// <reference path="../Logger/LogLevel.ts" />
+var Log;
+(function (Log) {
+    /**
+     * The window error handler class.
+     * @class
+     */
+    var Window = (function () {
+        function Window() {
+        }
+        /**
+         * Register a logger as error handler.
+         *
+         * @param {Logger_Interface} logger  - The logger.
+         */
+        Window.registerErrorHandler = function (logger) {
+            Window._loggers.push(logger);
+        };
+        /**
+         * Unregister a logger as error handler.
+         *
+         * @param {Logger_Interface} logger - The logger.
+         * @return {boolean} True if the logger was unregistred successfully, false otherwise.
+         */
+        Window.unregistrerErrorHandler = function (logger) {
+            var unregistred = true;
+            // Get the index of the registred logger from the list of loggers
+            var index = Window._loggers.indexOf(logger, 0);
+            // Check whether a logger was found in the list of registred loggers
+            if (index != undefined) {
+                Window._loggers.splice(index, 1);
+                unregistred = false;
+            }
+            return unregistred;
+        };
+        /**
+         * On error callback method.
+         *
+         * @param {any} errorMsg  - The error message.
+         * @param {string} url  - The url.
+         * @param {number} lineNumber  - The line number.
+         * @param {number} colNumber  - The col number.
+         * @param {any} error  - The stack trace error.
+         */
+        Window.onError = function (errorMsg, url, lineNumber, colNumber, error) {
+            if (error === void 0) { error = null; }
+            // The window loggers
+            var loggers = Window._loggers;
+            // Iterate through the configured log writers
+            for (var index in loggers) {
+                // Get the loggers
+                var logger = loggers[index];
+                // Log the event
+                logger.log(Log.Logger_LogLevel.FATAL, { errorMsg: errorMsg, lineNumber: lineNumber, colNumber: colNumber, error: error });
+            }
+            return false;
+        };
+        Object.defineProperty(Window, "loggers", {
+            /**
+             * Gets the registred loggers {Logger[]}.
+             *
+             * @return {Logger[]} The registred loggers.
+             */
+            get: function () {
+                return Window._loggers;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return Window;
+    })();
+    Log.Window = Window;
+    (function () {
+        // Check whether the variable window is available
+        if (typeof window == "undefined") {
+            return;
+        }
+        // Register a Window error event callback method
+        window.onerror = Window.onError;
+    })();
 })(Log || (Log = {}));
 /// <reference path="Logger/LogLevel.ts" />
 /// <reference path="Logger/Options/Parameters/Interface.ts" />

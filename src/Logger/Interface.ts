@@ -1,3 +1,9 @@
+/// <reference path="../Exception.ts" />
+/// <reference path="../Logger/Options/Interface.ts" />
+/// <reference path="../Logger/Writer/Interface.ts" />
+/// <reference path="../Logger/Filter/Interface.ts" />
+/// <reference path="../Logger/Appender/Interface.ts" />
+
 module Log {
 
 	/**

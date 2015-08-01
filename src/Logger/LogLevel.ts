@@ -1,3 +1,5 @@
+/// <reference path="../Logger/Type.ts" />
+
 module Log {
 
 	/**

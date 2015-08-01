@@ -1,3 +1,5 @@
+/// <reference path="Interface.ts" />
+
 module Log {
 
 	/**

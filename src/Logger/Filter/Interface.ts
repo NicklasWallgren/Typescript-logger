@@ -1,3 +1,6 @@
+/// <reference path="../LogLevel.ts" />
+/// <reference path="../../Exception.ts" />
+
 module Log {
 
 	/**

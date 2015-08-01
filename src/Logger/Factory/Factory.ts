@@ -1,3 +1,9 @@
+/// <reference path="../Type.ts" />
+/// <reference path="../Options/Interface.ts" />
+/// <reference path="../../Logger/Interface.ts" />
+/// <reference path="../../Logger.ts" />
+/// <reference path="../../Logger/Writer/Console/Writer.ts" />
+
 module Log {
 
 	/**

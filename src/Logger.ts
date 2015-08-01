@@ -1,3 +1,16 @@
+
+/// <reference path="Logger/Interface.ts" />
+/// <reference path="Logger/LogLevel.ts" />
+/// <reference path="Logger/Observer/Handler/Handler.ts" />
+/// <reference path="Logger/Observer/Event/Log.ts" />
+/// <reference path="Logger/Observer/Handler/Handler.ts" />
+/// <reference path="Logger/Options/Interface.ts" />
+/// <reference path="Logger/Writer/Interface.ts" />
+/// <reference path="Logger/Filter/Interface.ts" />
+/// <reference path="Logger/Appender/Interface.ts" />
+/// <reference path="Exception.ts" />
+/// <reference path="Utility/Type.ts" />
+
 module Log {
 
 	/**

@@ -1,3 +1,9 @@
+/// <reference path="../Options/Parameters/Interface.ts" />
+/// <reference path="../Writer/Interface.ts" />
+/// <reference path="../Filter/Interface.ts" />
+/// <reference path="../Appender/Interface.ts" />
+/// <reference path="../LogLevel.ts" />
+
 module Log {
 
 	/**
